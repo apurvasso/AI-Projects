@@ -1,8 +1,5 @@
 /*
-Roll no.:3458
-Cno.:C22019221457
-Name: Apurva Ashok Sonawane
-Batch: B4
+Name: Apurva Sonawane
 T.Y.B.Tech. Computer
 AIML Assignment Number 1:
 Problem Statement: BFS and DFS traversal for graph
