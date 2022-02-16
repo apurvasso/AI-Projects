@@ -1,5 +1,8 @@
 /*
-Name: Apurva Sonawane
+Roll no.:3458
+Cno.:C22019221457
+Name: Apurva Ashok Sonawane
+Batch: B4
 T.Y.B.Tech. Computer
 AIML Assignment Number 1:
 Problem Statement: BFS and DFS traversal for graph
@@ -49,7 +52,7 @@ class Graph
     }
     void DFSUtil(int vertex, boolean[] nodes)
     {
-        nodes[vertex] = true;                         //mark the node as explored
+        nodes[vertex] = true;                         //mark the node as explored nodes[] = explored or visited
         System.out.print(vertex + " ");
         int a;
         for (int i = 0; i < adj[vertex].size(); i++)  //iterate through the linked list and then propagate to the next few nodes
