@@ -1,0 +1,181 @@
+/*
+Roll no.:3458
+Cno.:C22019221457
+Name: Apurva Ashok Sonawane
+Batch: B4
+T.Y.B.Tech. Computer
+AIML Assignment Number 1:
+Problem Statement: BFS traversal for tree
+ */
+
+package tree;
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class node
+{
+	int data;
+	node left,right;
+	node(int d)
+	{
+		data=d;
+		left=null;
+		right = null;
+	}
+}
+
+class tree
+{
+	node root;
+	tree()
+	{
+		root=null;
+	}
+	boolean isEmpty()
+	{	
+		return(root==null);	
+	}
+	Scanner sc = new Scanner(System.in);
+	void create()
+	{
+		int choice=-1;
+		while(choice!=0)
+		{
+			System.out.println("Enter data for node: "); // accepting the data
+			int n = sc.nextInt();
+			node new_node= new node(n);
+			if(isEmpty())
+			{
+				root = new_node;    
+				System.out.println("Node inserted");
+			}
+			else
+			{
+				node ptr = root;
+				while(true)
+				{
+					System.out.println("Enter direction for node: ");  //accepting direction from user
+					char dir = sc.next().charAt(0);
+					if(dir == 'l')     // left direction
+					{
+						if(ptr.left==null)
+						{
+							ptr.left = new_node;
+							System.out.println("Node inserted");
+							break;
+						}
+						else
+						{
+							ptr = ptr.left;
+						}
+					}
+					else if(dir == 'r')   //right direction
+					{
+						if(ptr.right ==null)
+						{
+							ptr.right = new_node;
+							System.out.println("Node inserted");
+							break;
+						}
+						else
+						{
+							ptr = ptr.right;
+						}
+					}
+					else
+					{
+						System.out.println("Invalid");
+					}
+					
+				}
+				
+			}
+			System.out.println("Do you want to continue:(1/0) ");
+			choice = sc.nextInt();
+		}
+	}
+	
+	void bfs()
+	{
+		Queue<node> queue = new LinkedList<node>(); //implementing queue using linked list
+		queue.add(root);  //inserting root to the queue
+		while(!queue.isEmpty())   //running loop till queue is not empty
+		{
+			node temp = queue.poll();
+			System.out.print(temp.data+" ");   //print data from temp
+			if(temp.left != null)
+			{
+				queue.add(temp.left);    //add left child to queue
+			}
+			if(temp.right != null)
+			{
+				queue.add(temp.right);   // add right child to queue
+			}
+		}
+	}
+	
+}
+public class bfs {
+
+	public static void main(String[] args) {
+		tree t = new tree();
+		t.create();
+		System.out.println("BFS traversal of tree: ");
+		t.bfs();
+	}
+
+}
+
+/*output-
+Enter data for node: 
+1
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+2
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+3
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+4
+Enter direction for node: 
+l
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+5
+Enter direction for node: 
+r
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+6
+Enter direction for node: 
+l
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+0
+BFS traversal of tree: 
+1 3 2 4 6 5 
+*/
+
