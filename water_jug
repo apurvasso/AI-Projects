@@ -1,0 +1,122 @@
+/* Name:Apurva Sonawane
+ * RollNo: 3458
+ * C Number: C22019221457
+ * Assignment 3: Water Jug Problem
+ */
+
+
+package packg1;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class Group 
+{    
+	int gjug1=0,gjug2=0;    
+	ArrayList<Group> path;    
+	Group(int gjug1,int gjug2)    
+	{     
+		this.gjug1=gjug1;     
+		this.gjug2=gjug2;     
+		path = new ArrayList<Group>();    
+	}    
+	Group(int gjug1,int gjug2, ArrayList<Group> prev_path)    
+	{     
+		this.gjug1=gjug1;   
+		this.gjug2=gjug2;     
+		path = new ArrayList<Group>(prev_path);     
+		path.add(new Group(gjug1,gjug2));    
+	}   
+}
+
+public class WaterJug {
+	void waterJugMethod(int jug1,int jug2,int goal1,int goal2)   
+	{      
+		boolean visited[][]= new boolean[jug1+1][jug2+1];    
+		Queue<Group> queue = new LinkedList<Group>();    
+		queue.add(new Group(0,0)); 
+	  	while(!queue.isEmpty())    {     
+			Group curr = queue.poll();     
+			if(curr.gjug1>jug1 || curr.gjug2>jug2 || visited[curr.gjug1][curr.gjug2])     
+			{     
+				continue;
+			}     
+			visited[curr.gjug1][curr.gjug2]=true;     
+			if(curr.gjug1==goal1 && curr.gjug2==goal2)     
+			{      
+				System.out.println("Goal is reached!\nTotal no. of steps to reach goal state = " +curr.path.size());          
+				System.out.println("States of jugs is : ");      
+				for(int i = 0; i < curr.path.size(); i++)      
+				{       
+					System.out.println(curr.path.get(i).gjug1+" ,"+curr.path.get(i).gjug2); 
+				}      
+				return; 
+	 		}  
+			queue.add(new Group(jug1,0,curr.path));     
+			queue.add(new Group(0,jug2,curr.path));     
+			queue.add(new Group(curr.gjug1,0,curr.path));     
+			queue.add(new Group(0,curr.gjug2,curr.path));     
+			queue.add(new Group(jug1,curr.gjug2,curr.path));     
+			queue.add(new Group(curr.gjug2,jug2,curr.path)); 
+		 
+		   	if(curr.gjug1+curr.gjug2>=jug1)    
+			{     queue.add(new Group(jug1,curr.gjug2-(jug1-curr.gjug1),curr.path));    }    
+			if(curr.gjug1+curr.gjug2>=jug2)    
+			{     queue.add(new Group(curr.gjug1-(jug2-curr.gjug2),jug2,curr.path));    }    
+			if(curr.gjug1+curr.gjug2<jug1)    
+			{     queue.add(new     Group(curr.gjug1+curr.gjug2,0,curr.path));    } 
+		   	if(curr.gjug1+curr.gjug2<jug2)    
+			{     queue.add(new     Group(0,curr.gjug1+curr.gjug2,curr.path));    }  
+		 
+	  	}		   
+	  	System.out.println("Goal is Non-Achievable.");   
+	} 
+	 
+	public static void main(String[] args)    
+	{    
+		Scanner sc = new Scanner(System.in);    
+		System.out.println("Enter Capacity of Jug 1 and Jug 2 : ");    
+		int jug1=sc.nextInt();       
+		int jug2=sc.nextInt();    
+		System.out.println("Goal of Jug 1 and Jug 2 : ");    
+		int goal1=sc.nextInt();       
+		int goal2=sc.nextInt();    
+		WaterJug waterJug = new WaterJug();    
+		waterJug.waterJugMethod(jug1, jug2, goal1, goal2);  
+	} 
+}
+
+
+
+//Enter Capacity of Jug 1 and Jug 2 : 
+//4 3
+//Goal of Jug 1 and Jug 2 : 
+//2 3
+//Goal is reached!
+//Total no. of steps to reach goal state = 4
+//States of jugs is : 
+//0 ,3
+//3 ,3
+//4 ,2
+//2 ,3
+
+//Enter Capacity of Jug 1 and Jug 2 : 
+//4 15
+//Goal of Jug 1 and Jug 2 : 
+//1 5
+//Goal is Non-Achievable.
+
+//Enter Capacity of Jug 1 and Jug 2 : 
+//4 15
+//Goal of Jug 1 and Jug 2 : 
+//0 12
+//Goal is reached!
+//Total no. of steps to reach goal state = 6
+//States of jugs is : 
+//4 ,0
+//0 ,4
+//4 ,4
+//0 ,8
+//4 ,8
+//0 ,12
