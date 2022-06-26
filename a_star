@@ -1,0 +1,254 @@
+ /* Name:Apurva Sonawane
+ * RollNo: 3458
+ * C Number: C22019221457
+ * A star on graph implementation
+ */
+import java.util.*;
+
+class Node {
+	boolean visited;
+	String data;
+	int weight;
+	int heuristic;
+	LinkedList<Node> adjList = new LinkedList<Node>(); // list for storing adjacent nodes
+
+	public Node(String data, int weight, int heuristic) {
+		this.data = data;
+		visited = false;
+		this.weight = weight;
+		this.heuristic = heuristic;
+	}
+}
+
+public class A_Star_On_Graph {
+	int n;
+	int e;
+	Node[] head;
+	Scanner in = new Scanner(System.in);
+	HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+	void a_star() {
+		Queue<Node> queue = new LinkedList<Node>();
+		Queue<String> qpath = new LinkedList<String>();
+		TreeMap<String, Integer> resultantMap = new TreeMap<String, Integer>();
+		HashMap<String, Integer> pathCost = new HashMap<String, Integer>();
+
+		System.out.println("Enter Start node :");
+		String start = in.next();
+		System.out.println("Enter Goal node :");
+		String goal = in.next();
+		for (int i = 0; i < n; i++) {
+			if (head[i].data.equalsIgnoreCase(start)) {
+				head[i].visited = true;
+				queue.add(head[i]);
+				qpath.add(start);
+				break;
+			}
+		}
+
+		int index= -1;
+		while (!queue.isEmpty()) {
+			Node temp = queue.poll();
+			String temppath = qpath.poll();
+			int gn = pathCost.getOrDefault(temppath, 0);
+			resultantMap.put(temppath, gn + temp.heuristic);
+
+			if (temp.data.equals(goal)) {
+				continue;
+			}
+			for (int i = 0; i < temp.adjList.size(); i++) {
+				Node ptr = temp.adjList.get(i);
+				for (int j = 0; j < n; j++) {
+
+					if (ptr.data.equalsIgnoreCase(head[j].data))
+
+					{
+						index = j;
+						break;
+					}
+				}
+				if (!head[index].visited &&
+
+						!temppath.contains(head[index].data))
+
+				{
+					head[index].weight = ptr.weight;
+					queue.add(head[index]);
+					qpath.add(temppath + "_" + head[index].data);
+					pathCost.put(temppath + "_" + head[index].data,
+
+							gn + head[index].weight);
+				}
+			}
+		}
+		String optimumPath = "";
+		int minimumCost = Integer.MAX_VALUE;
+		System.out.println("All paths from " + start + "to " + goal + " : ");
+
+		for (Map.Entry<String, Integer> map : resultantMap.entrySet()) {
+			if (map.getKey().contains(goal)) {
+				String str = map.getKey().replaceAll("_", " ->");
+
+				if (minimumCost > map.getValue()) {
+					optimumPath = str;
+					minimumCost = map.getValue();
+				}
+				System.out.println(str + " : " + map.getValue());
+			}
+		}
+		System.out.println("Optimized Path from " + start + " to " + goal + " : ");
+
+		System.out.println(optimumPath + " : " + minimumCost);
+	}
+
+	void createUsingAdjList() {
+		String n1, n2;
+		System.out.println("Enter no of nodes : ");
+		n = in.nextInt();
+		head = new Node[n];
+		System.out.println("Enter no of edges : ");
+		e = in.nextInt();
+		System.out.println("Enter nodes :");
+		for (int i = 0; i < n; i++) {
+			String node_no = in.next();
+
+			head[i] = new Node(node_no, 0, 0);
+		}
+		System.out.println("Enter Heuristic Values :");
+		for (int i = 0; i < n; i++) {
+			System.out.println("Enter heuristic value of node " + head[i].data + " :");
+
+			int h = in.nextInt();
+			map.put(head[i].data, h);
+			head[i].heuristic = h;
+		}
+		for (int i = 0; i < e; i++) {
+			System.out.println("Enter two nodes connected by edge " + (i + 1) + ": ");
+
+			n1 = in.next();
+			n2 = in.next();
+			System.out.println("Enter weight of edge" + (i + 1) + ": ");
+
+			int weight = in.nextInt();
+			insert(n1, n2, weight, map.get(n2));
+			insert(n2, n1, weight, map.get(n1));
+		}
+	}
+
+	void insert(String n1, String n2, int weight, int heuristic) {
+		Node temp = new Node(n2, weight, heuristic);
+		for (int i = 0; i < n; i++) // loop till node is not found
+		{
+			if (head[i].data.compareTo(n1) == 0)
+				head[i].adjList.add(temp); // add adjacent node in the list
+		}
+	}
+
+	void displayAdjList() {
+		Node ptr;
+		for (int i = 0; i < n; i++) {
+			System.out.print("List of " + head[i].data + ": ");
+			for (int j = 0; j < head[i].adjList.size(); j++) {
+				ptr = head[i].adjList.get(j);
+				System.out.print(ptr.data + " ");
+			}
+
+			System.out.println();
+		}
+	}
+
+	public static void main(String[] args) {
+		A_Star_On_Graph graph = new A_Star_On_Graph();
+		graph.createUsingAdjList();
+		graph.displayAdjList();
+		graph.a_star();
+	}
+}
+
+/*
+ *OUTPUT: 
+Enter no of nodes : 
+7
+Enter no of edges : 
+9
+Enter nodes :
+0
+1
+2
+3
+4
+5
+6
+Enter Heuristic Values :
+Enter heuristic value of node 0 :
+21
+Enter heuristic value of node 1 :
+14
+Enter heuristic value of node 2 :
+18
+Enter heuristic value of node 3 :
+18
+Enter heuristic value of node 4 :
+5
+Enter heuristic value of node 5 :
+8
+Enter heuristic value of node 6 :
+0
+Enter two nodes connected by edge 1: 
+0 1
+Enter weight of an edge 1: 
+9
+Enter two nodes connected by edge 2: 
+0 2
+Enter weight of an edge 2: 
+4
+Enter two nodes connected by edge 3: 
+0 3
+Enter weight of an edge 3: 
+7
+Enter two nodes connected by edge 4: 
+1 4
+Enter weight of an edge 4: 
+11
+Enter two nodes connected by edge 5: 
+2 4
+Enter weight of an edge 5: 
+17
+Enter two nodes connected by edge 6: 
+2 5
+Enter weight of an edge 6: 
+12
+Enter two nodes connected by edge 7: 
+3 5
+Enter weight of an edge 7: 
+14
+Enter two nodes connected by edge 8: 
+4 6
+Enter weight of an edge 8: 
+5
+Enter two nodes connected by edge 9: 
+5 6
+Enter weight of edge 9: 
+9
+List of 0: 1 2 3 
+List of 1: 0 4 
+List of 2: 0 4 5 
+List of 3: 0 5 
+List of 4: 1 2 6 
+List of 5: 2 3 6 
+List of 6: 4 5 
+Enter Start Node :
+0
+Enter Goal Node :
+6
+All paths from 0 to 6 : 
+0 ->1 ->4 ->2 ->5 ->6 : 58
+0 ->1 ->4 ->6 : 25
+0 ->2 ->4 ->6 : 26
+0 ->2 ->5 ->6 : 25
+0 ->3 ->5 ->2 ->4 ->6 : 55
+0 ->3 ->5 ->6 : 30
+Optimized Path from 0 to 6 : 
+0 ->1 ->4 ->6 : 25
+
+ */
