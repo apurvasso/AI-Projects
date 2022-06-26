@@ -1,0 +1,182 @@
+ /* Name:Apurva Sonawane
+ * RollNo: 3458
+ * C Number: C22019221457
+ * Unification of strings
+ */
+package unification;
+
+import java.util.HashMap;
+
+import java.util.Scanner;
+import java.util.Set;
+class HelperUnification {
+    Boolean NTsame = false;
+    Boolean uni = false;
+    String hstr1, hstr2;
+    HashMap < String, String > subs = new HashMap < String, String > ();
+    HelperUnification(String c, String d) {
+        hstr1 = c;
+        hstr2 = d;
+        int i = 0;
+        while (hstr1.charAt(i) == hstr2.charAt(i)) {
+            i++;
+        }
+        if (i == 0) {
+            System.out.println("The functions are different.");
+            NTsame = true;
+        }
+    }
+    void parenthesis(String a, String b) {
+        if (subs.containsValue(b)) {
+            System.out.println("Test Failed.");
+        } else {
+            int open = 0, open1 = 0, close = 0, close1 = 0;
+            for (int j = 0; j < a.length(); j++) {
+                if (a.charAt(j) == '(') {
+
+
+                    open++;
+                } else if (a.charAt(j) == ')') {
+                    close++;
+                }
+            }
+            for (int j = 0; j < b.length(); j++) {
+                if (b.charAt(j) == '(') {
+                    open1++;
+                } else if (b.charAt(j) == ')') {
+                    close1++;
+                }
+            }
+            if (open1 != close1 || open != close) {
+                System.out.println("Test Failed.");
+            } else {
+                if (open == 0) {
+                    System.out.println("Substitute : " + a + "/" + b);
+                    hstr1 = hstr1.replace(a, b);
+                    subs.put(a, b);
+                } else if (open1 == 0) {
+                    System.out.println("Substitute : " + a + "/" + b);
+                    hstr1 = hstr1.replace(a, b);
+                    subs.put(a, b);
+                } else {
+                    int h = 0;
+                    if (a.compareTo(b) == 0) {
+                        h = a.length();
+                    } else
+
+
+                    {
+                        while (a.charAt(h) == b.charAt(h)) {
+                            h++;
+                        }
+                    }
+                    if (h == 0) {
+                        System.out.println("The functions are different.");
+                    } else if (h >= a.length()) {
+                        System.out.println("Unified.");
+                    } else {
+                        String f = a.substring(a.indexOf("(") + 1, a.length() - 1);
+                        String d = b.substring(b.indexOf("(") + 1, b.length() - 1);
+                        parameters(f, d);
+                    }
+                }
+                if (hstr1.compareTo(hstr2) == 0)
+                    uni = true;
+            }
+        }
+    }
+    void parameters(String x, String y) {
+        String one[] = x.split(",");
+        String two[] = y.split(",");
+        if (one.length != two.length)
+            System.out.println("Test Failed.");
+        else {
+            for (int i = 0; i < one.length; i++) {
+                if (hstr1.compareTo(hstr2) == 0) {
+                    System.out.println("\nStrings are already unified.");
+                } else {
+                    if (!subs.isEmpty())
+
+
+                    {
+                        Set < String > keySet = subs.keySet();
+
+
+                        String j[] = keySet.toArray(new String[keySet.size()]);
+                        for (int e = 0; e < keySet.size(); e++) {
+                            if (one[i].contains(j[e])) {
+                                one[i] = one[i].replace(j[e], subs.get(j[e])); //subs.get(j[e]) will give value of thata key
+                            }
+                            if (two[i].contains(j[e])) {
+                                two[i] = two[i].replace(j[e], subs.get(j[e]));
+                            }
+                        }
+                    }
+                    if (one[i].contains("(") || two[i].contains("(")) {
+                        parenthesis(one[i], two[i]);
+                    } else {
+                        if (!subs.containsKey(one[i])) {
+                            System.out.println("Substitute : " + two[i] + "/" + one[i]);
+                            subs.put(one[i], two[i]);
+                            hstr1 = hstr1.replace(one[i], two[i]);
+                        }
+                        for (int j = i; j < one.length; j++) {
+                            if (one[j].contains(one[i])) {
+                                one[j] = one[j].replace(one[i], two[i]);
+                            }
+                            if (two[j].contains(one[i])) {
+                                two[j] = two[j].replace(one[i], two[i]);
+                            }
+
+
+                        }
+                    }
+                }
+            }
+        }
+        if (hstr1.compareTo(hstr2) == 0)
+            uni = true;
+    }
+}
+public class Unification {
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the two strings : ");
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        HelperUnification hunifn = new HelperUnification(str1, str2);
+        if (!hunifn.NTsame)
+            hunifn.parenthesis(str1, str2);
+        if (hunifn.uni)
+            System.out.println("Successfully Unified");
+        else
+            System.out.println("Not possible");
+    }
+}
+
+
+
+
+//Enter the two strings : 
+//p(x,f(y))
+//p(a,g(x))
+//Substitute : a/x
+//The functions are different.
+//Not possible
+
+//
+//Enter the two strings : 
+//p(x,g(y))
+//p(a,f(g(z))
+//Test Failed.
+//Not possible
+
+//Enter the two strings : 
+//p(x,f(y))
+//p(a,f(g(z)))
+//Substitute : a/x
+//Substitute : y/g(z)
+//Successfully Unified
+
+//*/
