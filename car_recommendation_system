@@ -1,0 +1,446 @@
+/*Car recommendation system*/
+go:-
+hypothesis(Car),
+write('I believe that '),
+write(Car),
+write(' will be best choice for you.'),
+nl,
+undo.
+/*hypothesis that should be tested*/
+hypothesis(tata_altroz) :- tata_altroz, !.
+hypothesis(volkswagen_polo) :- volkswagen_polo, !.
+hypothesis(hyundai_santro):- hyundai_santro,!.
+hypothesis(maruti_celerio):- maruti_celerio ,!.
+hypothesis(tata_tiago):- tata_tiago ,!.
+
+hypothesis(bmw_2series_gran_coupe) :- bmw_2series_gran_coupe, !.
+hypothesis(lamborghini_huracan_evo) :- lamborghini_huracan_evo, !.
+hypothesis(jaguar_F_type):- jaguar_F_type,!.
+
+hypothesis(honda_city_4th_generation):- honda_city_4th_generation ,!.
+hypothesis(maruti_dzire):- maruti_dzire ,!.
+hypothesis(tata_tigor):- tata_tigor ,!.
+hypothesis(skoda_slavia):- skoda_slavia ,!.
+
+hypothesis(mg_hector):- mg_hector ,!.
+hypothesis(kia_carens):- kia_carens ,!.
+hypothesis(mahindra_thar):- mahindra_thar ,!.
+hypothesis(tata_harrier):- tata_harrier ,!.
+
+hypothesis(unknown). /*no diagnosis*/
+
+tata_altroz:-
+verify(hatchback_body_type),
+verify(seating_capacity_5),
+verify(price_7lakn_onwards),
+verify(mileage_upto_25kmpl_for_petrol),
+verify(mileage_upto_19kmpl_for_diesel),
+verify(engine_upto_1497cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_345L),
+verify(available_in_Gray_color),
+verify(available_in_Black_color),
+verify(available_in_Gold_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+nl.
+
+hyundai_santro:-
+verify(hatchback_body_type),
+verify(seating_capacity_5),
+verify(price_5lakn_onwards),
+
+verify(mileage_upto_20kmpl_for_petrol),
+verify(mileage_upto_29kmpl_for_CNG),
+verify(engine_upto_1086cc),
+verify(gear_transmission_AMT_and_manual),
+verify(boot_space_235L),
+verify(available_in_Silver_color),
+verify(available_in_Gray_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Beige_color),
+nl.
+
+volkswagen_polo:-
+verify(hatchback_body_type),
+verify(seating_capacity_5),
+verify(price_6lakn_onwards),
+verify(mileage_upto_15kmpl_for_petrol),
+verify(engine_upto_999cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_280L),
+verify(available_in_Gray_color),
+verify(available_in_Black_color),
+verify(available_in_Silver_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+verify(available_in_Brown_color),
+nl.
+
+maruti_celerio:-
+verify(hatchback_body_type),
+verify(seating_capacity_5),
+verify(price_5lakn_onwards),
+verify(mileage_upto_26kmpl_for_petrol),
+verify(mileage_upto_35kmpl_for_CNG),
+verify(engine_upto_998cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_313L),
+verify(available_in_Gray_color),
+verify(available_in_Black_color),
+verify(available_in_Gold_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+nl.
+tata_tiago:-
+verify(hatchback_body_type),
+verify(seating_capacity_5),
+verify(price_5lakn_onwards),
+verify(mileage_upto_26kmpl_for_petrol),
+verify(engine_upto_1199cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_242L),
+verify(available_in_Gray_color),
+verify(available_in_MidnightPlum_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+
+nl.
+
+/*Coupe*/
+bmw_2series_gran_coupe:-
+verify(coupe_body_type),
+verify(seating_capacity_5),
+verify(price_41lakn_onwards),
+verify(mileage_upto_15kmpl_for_petrol),
+verify(engine_upto_1998cc),
+verify(gear_transmission_automatic),
+verify(boot_space_430L),
+verify(has_air_bags),
+verify(has_autonomous_emergency_braking),
+verify(available_in_Metallic_color),
+verify(available_in_Red_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+nl.
+
+lamborghini_huracan_evo:-
+verify(coupe_body_type),
+verify(seating_capacity_2),
+verify(price_3cr_onwards),
+verify(mileage_upto_7kmpl_for_petrol),
+verify(engine_upto_5204cc),
+verify(gear_transmission_automatic),
+verify(boot_space_100L),
+verify(has_air_bags),
+verify(gives_seat-belt_warning),
+
+verify(has_child_lock),
+verify(gives_overspeed_warning),
+verify(available_in_Green_color),
+verify(available_in_Gold_color),
+verify(available_in_Red_color),
+verify(available_in_Gray_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+verify(available_in_Yellow_color),
+verify(available_in_Black_color),
+nl.
+
+jaguar_F_type:-
+verify(coupe_body_type),
+verify(seating_capacity_2),
+verify(price_97lakh_onwards),
+verify(mileage_upto_10kmpl_for_petrol),
+verify(engine_upto_1997cc),
+verify(gear_transmission_automatic),
+verify(boot_space_132L),
+verify(has_air_bags),
+verify(gives_seat-belt_warning),
+verify(has_child_lock),
+verify(gives_overspeed_warning),
+verify(available_in_Red_color),
+verify(available_in_Gray_color),
+verify(available_in_White_color),
+verify(available_in_Blue_color),
+verify(available_in_Navy-blue_color),
+
+verify(available_in_Black_color),
+nl.
+
+/*sedan*/
+honda_city_4th_generation:-
+verify(sedan_body_type),
+verify(seating_capacity_5),
+verify(price_9lakn_onwards),
+verify(mileage_upto_17kmpl_for_petrol),
+verify(engine_upto_1497cc),
+verify(gear_transmission_manual),
+verify(boot_space_506L),
+verify(available_in_SvWhite_color),
+verify(available_in_VWhite_color),
+verify(available_in_SvRed_color),
+verify(available_in_VRed_color),
+nl.
+
+maruti_dzire:-
+verify(sedan_body_type),
+verify(seating_capacity_5),
+verify(price_6lakh_onwards),
+verify(mileage_upto_24kmpl_for_petrol),
+verify(engine_upto_1197cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_378L),
+verify(available_in_White_color),
+verify(available_in_Violet_color),
+
+verify(available_in_Pink_color),
+nl.
+
+tata_tigor:-
+verify(sedan_body_type),
+verify(seating_capacity_5),
+verify(price_6lakn_onwards),
+verify(mileage_upto_20kmpl_for_petrol),
+verify(engine_upto_1199cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_419L),
+verify(available_in_DeepRed_color),
+verify(available_in_OpalWhite_color),
+verify(available_in_MagneticRed_color),
+verify(available_in_PearlescentWhite_color),
+verify(available_in_ArizonaBlue_color),
+verify(available_in_PureSilver_color),
+verify(available_in_DaytonaGray_color),
+nl.
+
+skoda_slavia:-
+verify(sedan_body_type),
+verify(seating_capacity_5),
+verify(price_11lakn_onwards),
+verify(mileage_upto_19kmpl_for_petrol),
+verify(engine_upto_1498cc),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_521L),
+verify(available_in_BrilliantSilver_color),
+
+verify(available_in_CarbonSteel_color),
+verify(available_in_CrystalBlue_color),
+verify(available_in_TornadoRed_color),
+verify(available_in_CandyWhite_color),
+nl.
+
+/*suv*/
+mg_hector:-
+verify(suv_body_type),
+verify(seating_capacity_5),
+verify(price_14lakh_onwards),
+verify(mileage_upto_15kmpl_for_petrol),
+verify(mileage_upto_15kmpl_for_diesel),
+verify(engine_upto_1451cc_for_petrol),
+verify(engine_upto_1956cc_for_diesel),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_587L),
+verify(available_in_HavanaGray_color),
+verify(available_in_BurgundyRedMetallic_color),
+verify(available_in_CrystalBlue_color),
+verify(available_in_TornadoRed_color),
+verify(available_in_CandyWhiteWithStarryBlack_color),
+verify(available_in_StarrySkyBlue_color),
+verify(available_in_AuroraSilver_color),
+verify(ground_clearance_192mm),
+verify(ventilated_seats_extra_feature),
+verify(panoramic_roof_extra_feature),
+verify(wireless_charging_extra_feature),
+
+nl.
+
+kia_carens:-
+verify(suv_body_type),
+verify(seating_capacity_6to7),
+verify(price_15lakh_onwards),
+verify(mileage_upto_15kmpl_for_petrol),
+verify(mileage_upto_21kmpl_for_diesel),
+verify(engine_upto_1353cc_for_petrol),
+verify(engine_upto_1497cc_for_diesel),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_216L),
+verify(available_in_MossBrown_color),
+verify(available_in_SparklingSilver_color),
+verify(available_in_IntenseRed_color),
+verify(available_in_GlacierWhitePearl_color),
+verify(available_in_AuroraBlackPearl_color),
+verify(available_in_ImperialBlue_color),
+verify(available_in_ClearWhite_color),
+verify(ground_clearance_195mm),
+verify(sky_light_sunroof_extra_feature),
+verify(sixtyFour_color_ambient_mood_lighting_extra_feature),
+verify(hill_assist_extra_feature),
+nl.
+
+mahindra_thar:-
+verify(suv_body_type),
+verify(seating_capacity_4),
+verify(price_17lakh_onwards),
+
+verify(mileage_upto_22kmpl_for_petrol),
+verify(mileage_upto_26kmpl_for_diesel),
+verify(engine_upto_2184cc_for_petrol),
+verify(engine_upto_1997cc_for_diesel),
+verify(gear_transmission_6_speed_manual),
+verify(boot_space_600L),
+verify(available_in_RockyBeige_color),
+verify(available_in_AquaMarine_color),
+verify(available_in_MysticCopper_color),
+verify(available_in_RedRage_color),
+verify(available_in_NapoliBlack_color),
+verify(available_in_GalaxyGray_color),
+verify(ground_clearance_226mm),
+verify(eighteen_inch_tyre_with_proper_4wd_transmission_extra_feature),
+verify(very_short_overhangs_to_climb_rocks_extra_feature),
+n1.
+
+tata_harrier:-
+verify(suv_body_type),
+verify(seating_capacity_5),
+verify(price_14lakh_onwards),
+verify(mileage_upto_17kmpl_for_petrol),
+verify(mileage_upto_16kmpl_for_diesel),
+verify(engine_upto_1997cc_for_petrol),
+verify(engine_upto_1956cc_for_diesel),
+verify(gear_transmission_auto_and_manual),
+verify(boot_space_425L),
+verify(available_in_OrcusWhite_color),
+verify(available_in_CalypsoRed_color),
+
+verify(available_in_DaytonaGray_color),
+verify(available_in_OberonBlack_color),
+verify(available_in_GrasslandBeige_color),
+verify(ground_clearance_205mm),
+verify(ira_connected_car_technology_extra_feature),
+verify(six-way_power_adjustible_driver_seat_extra_feature),
+nl.
+
+/*ask questions*/
+ask(Question) :-
+write('Do you want following features in your car?'),
+write(Question),
+write('? '),
+read(Response),
+nl,
+((Response == yes;Response==y)
+->
+assert(yes(Question));
+assert(no(Question)),fail).
+:- dynamic yes/1,no/1.
+
+/*How to verify something */
+verify(S) :-
+(yes(S)
+->
+true ;
+(no(S)
+
+->
+fail ;
+ask(S))).
+/* undo all yes/no assertions*/
+undo :- retract(yes(_)),fail.
+undo :- retract(no(_)),fail.
+undo.
+
+OUTPUT:
+Welcome to SWI-Prolog (threaded, 64 bits, version 8.4.2)
+SWI-Prolog comes with ABSOLUTELY NO WARRANTY. This is free software.
+Please run ?- license. for legal details.
+
+For online help and background, visit https://www.swi-prolog.org
+For built-in help, use ?- help(Topic). or ?- apropos(Word).
+
+?-
+% c:/Users/Admin/Desktop/vehicle_recommendation_system.pl compiled 0.02 sec, 39 clauses
+?- go.
+Do you want following features in your car?hatchback_body_type? no.
+
+Do you want following features in your car?coupe_body_type? |: yes.
+
+Do you want following features in your car?seating_capacity_5? |: no.
+
+Do you want following features in your car?seating_capacity_2? |: yes.
+
+Do you want following features in your car?price_3cr_onwards? |: no.
+
+Do you want following features in your car?price_97lakh_onwards? |: yes.
+
+Do you want following features in your car?mileage_upto_10kmpl_for_petrol? |: yes.
+
+Do you want following features in your car?engine_upto_1997cc? |: yes.
+
+Do you want following features in your car?gear_transmission_automatic? |: yes.
+
+Do you want following features in your car?boot_space_132L? |: yes.
+
+Do you want following features in your car?has_air_bags? |: yes.
+
+Do you want following features in your car?gives_seat-belt_warning? |: yes.
+
+Do you want following features in your car?has_child_lock? |: yes.
+
+Do you want following features in your car?gives_overspeed_warning? |: yes.
+
+Do you want following features in your car?available_in_Red_color? |: yes.
+
+Do you want following features in your car?available_in_Gray_color? |: yes.
+
+Do you want following features in your car?available_in_White_color? |: yes.
+
+Do you want following features in your car?available_in_Blue_color? |: yes.
+
+Do you want following features in your car?available_in_Navy-blue_color? |: yes.
+
+Do you want following features in your car?available_in_Black_color? |: yes.
+
+I believe that jaguar_F_type will be best choice for you.
+true.
+?- go.
+Do you want following features in your car?hatchback_body_type? no.
+
+Do you want following features in your car?coupe_body_type? |: no.
+
+Do you want following features in your car?sedan_body_type? |: no.
+
+Do you want following features in your car?suv_body_type? |: yes.
+
+Do you want following features in your car?seating_capacity_5? |: yes.
+
+Do you want following features in your car?price_14lakh_onwards? |: no.
+
+Do you want following features in your car?seating_capacity_6to7? |: yes.
+
+Do you want following features in your car?price_15lakh_onwards? |: no.
+
+Do you want following features in your car?seating_capacity_4? |: yes.
+
+Do you want following features in your car?price_17lakh_onwards? |: yes.
+
+Do you want following features in your car?mileage_upto_22kmpl_for_petrol? |: yes.
+
+Do you want following features in your car?mileage_upto_26kmpl_for_diesel? |: yes.
+
+Do you want following features in your car?engine_upto_2184cc_for_petrol? |: yes.
+
+Do you want following features in your car?engine_upto_1997cc_for_diesel? |: yes.
+
+Do you want following features in your car?gear_transmission_6_speed_manual? |:yes.
+
+Do you want following features in your car?boot_space_600L? |: yes.
+
+Do you want following features in your car?available_in_RockyBeige_color? |: no.
+
+I believe that unknown will be best choice for you.
+true.
