@@ -1,0 +1,250 @@
+/*
+ * Name:Apurva Sonawane
+ * RollNo: 3458
+ * C Number: C22019221457
+ * Best First Search Implementation
+ */
+
+package bestFirstSearch;
+
+
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+//for adjacency matrix
+class AdjMatrix{
+	int[][] mat;
+	int vertices;
+	int start;
+	int goal;
+	int[] heuristicvals ;
+	ArrayList<Integer> path;
+	
+	void createAdjMat() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Is the graph directed?(y/n): ");
+		char d=sc.next().charAt(0);
+		System.out.print("Enter number of vertices: ");
+		vertices=sc.nextInt();
+		mat = new int[vertices][vertices];
+		
+		System.out.print("Enter number of edges: ");
+		int e=sc.nextInt();
+		System.out.print("Edges: ");
+		for(int i=0;i<e;i++){
+			System.out.print("\n"+(i+1)+")\t Edge: ");
+			int x=sc.nextInt();
+			System.out.print("to: ");
+			int y=sc.nextInt();
+			
+			System.out.print("Weight: ");
+			int weight=sc.nextInt();
+			
+			mat[x][y]=weight;
+			if(Character.compare(d, 'n')==0){
+				this.mat[y][x]=weight;
+			}
+		}
+		
+		heuristicvals= new int[vertices];
+		System.out.print("Enter starting vertex: ");
+		start=sc.nextInt();
+		
+		boolean valid=false;
+		do {
+			System.out.print("Enter goal: ");
+			goal=sc.nextInt();
+			if(goal>=vertices || start==goal) {
+				System.out.println("Goal entered is not valid.");			
+			}else {
+				valid=true;
+			}
+		}while(!valid);
+		
+		System.out.println("Enter heuristic values of: ");
+		for(int i=0;i<vertices;i++) {
+			if(i==goal) {							//don't accept heuristic value of a goal as it is zero always
+				System.out.println(i+" :0");
+				continue;
+			}
+			System.out.print(i+" :");
+			heuristicvals[i]=sc.nextInt();
+		}
+		
+		sc.close();
+	}
+	
+	void displayAdjMat() {
+		System.out.println("\nAdjacency matrix: \n");
+		for(int i=0;i<vertices;i++) {
+			for(int j=0;j<vertices;j++) {
+				System.out.format("%3d",mat[i][j]);
+				System.out.print("  ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+	
+	void bestFS(boolean[] visited) { 
+		//declaring a priority queue of point where x corresponds to vertices and y corresponds to their heuristic values
+		PriorityQueue<Point> pq = new PriorityQueue<Point>(vertices+1,new comparator());
+		
+		//add start vertex to priority queue and mark it as visited
+		pq.add(new Point(start,heuristicvals[start]));
+		visited[start]=true;
+		
+		//until queue is not empty
+		while(!pq.isEmpty()) {
+			//take out a point from a queue and add vertex in it to the path
+			Point p=pq.poll();
+			path.add(p.x);
+			
+			//if vertex is equal to goal, print path and cost
+			if(p.x==goal) {
+				int cost=0;
+				System.out.println("Path: "+path);
+				for(int i=0;i<path.size()-1;i++) {
+					cost+= mat[path.get(i)][path.get(i+1)];
+				}
+				System.out.println("Cost= "+cost);
+				return ;
+			}
+			
+			//otherwise visit all its unvisited adjacent vertices
+			for(int i=0;i<vertices;i++) {
+				if(mat[p.x][i]!=0 && visited[i]==false) {
+					pq.add(new Point(i,heuristicvals[i]));
+					visited[i]=true;  
+				}
+			}
+		}
+	}
+	
+}
+
+class comparator implements Comparator<Point>{
+	@Override
+	public int compare(Point a,Point b) {
+		if(a.y > b.y) {
+			return 1;
+		}
+		else if(a.y < b.y) {
+			return -1;
+		}
+		return 0;
+	}
+}
+    
+class BestFirstSearch{
+	public static void main(String args[]) {
+		
+		AdjMatrix adjmatx = new AdjMatrix();
+		adjmatx.createAdjMat();
+		adjmatx.displayAdjMat();
+		adjmatx.path=new ArrayList<Integer>();
+		System.out.println("Result of Best First Search: ");
+		adjmatx.bestFS(new boolean[adjmatx.vertices]);
+	}
+}
+/*OUTPUT:
+ * 
+Is the graph directed?(y/n): n
+Enter number of vertices: 14
+Enter number of edges: 13
+Edges: 
+1)	 Edge: 0
+to: 1
+Weight: 3
+
+2)	 Edge: 0
+to: 2
+Weight: 6
+
+3)	 Edge: 0
+to: 3
+Weight: 5
+
+4)	 Edge: 1
+to: 4
+Weight: 9
+
+5)	 Edge: 1
+to: 5
+Weight: 8
+
+6)	 Edge: 2
+to: 6
+Weight: 12
+
+7)	 Edge: 2
+to: 7
+Weight: 14
+
+8)	 Edge: 3
+to: 8
+Weight: 7
+
+9)	 Edge: 8
+to: 9
+Weight: 5
+
+10)	 Edge: 8
+to: 10
+Weight: 6
+
+11)	 Edge: 9
+to: 11
+Weight: 1
+
+12)	 Edge: 9
+to: 12
+Weight: 10
+
+13)	 Edge: 9
+to: 13
+Weight: 2
+Enter starting vertex: 0
+Enter goal: 9
+Enter heuristic values of: 
+0 :10
+1 :20
+2 :34
+3 :45
+4 :56
+5 :67
+6 :11
+7 :2
+8 :3
+9 :0
+10 :1
+11 :7
+12 :6
+13 :4
+
+Adjacency matrix: 
+
+  0    3    6    5    0    0    0    0    0    0    0    0    0    0  
+  3    0    0    0    9    8    0    0    0    0    0    0    0    0  
+  6    0    0    0    0    0   12   14    0    0    0    0    0    0  
+  5    0    0    0    0    0    0    0    7    0    0    0    0    0  
+  0    9    0    0    0    0    0    0    0    0    0    0    0    0  
+  0    8    0    0    0    0    0    0    0    0    0    0    0    0  
+  0    0   12    0    0    0    0    0    0    0    0    0    0    0  
+  0    0   14    0    0    0    0    0    0    0    0    0    0    0  
+  0    0    0    7    0    0    0    0    0    5    6    0    0    0  
+  0    0    0    0    0    0    0    0    5    0    0    1   10    2  
+  0    0    0    0    0    0    0    0    6    0    0    0    0    0  
+  0    0    0    0    0    0    0    0    0    1    0    0    0    0  
+  0    0    0    0    0    0    0    0    0   10    0    0    0    0  
+  0    0    0    0    0    0    0    0    0    2    0    0    0    0  
+
+Result of Best First Search: 
+Path: [0, 1, 2, 7, 6, 3, 8, 9]
+Cost= 29
+ 
+
+*/
