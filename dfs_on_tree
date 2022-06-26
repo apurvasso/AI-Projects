@@ -1,0 +1,381 @@
+/*
+Roll no.:3458
+Cno.:C22019221457
+Name: Apurva Ashok Sonawane
+Batch: B4
+T.Y.B.Tech. Computer
+Problem Statement: DFS traversal for tree
+*/
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+import java.util.Stack;
+
+class node
+{
+	int data;
+	node left,right;
+	node(int d)
+	{
+		data=d;
+		left=null;
+		right = null;
+	}
+}
+
+class tree
+{
+	node root;
+	tree()
+	{
+		root=null;
+	}
+	
+	Scanner sc = new Scanner(System.in);
+	node create()
+	{
+		int choice=-1;
+		while(choice!=0)
+		{
+			System.out.println("Enter data for node: "); // accepting the data
+			int n = sc.nextInt();
+			node new_node= new node(n);
+			if(root == null)
+			{
+				root = new_node;    
+				System.out.println("Node inserted");
+			}
+			else
+			{
+				node ptr = root;
+				while(ptr != null)
+				{
+					System.out.println("Enter direction for node: ");  //accepting direction from user
+					char dir = sc.next().charAt(0);
+					if(dir == 'l')     // left direction
+					{
+						if(ptr.left==null)
+						{
+							ptr.left = new_node;
+							System.out.println("Node inserted");
+							break;
+						}
+						else
+						{
+							ptr = ptr.left;
+						}
+					}
+					else if(dir == 'r')   //right direction
+					{
+						if(ptr.right ==null)
+						{
+							ptr.right = new_node;
+							System.out.println("Node inserted");
+							break;
+						}
+						else
+						{
+							ptr = ptr.right;
+						}
+					}
+					else
+					{
+						System.out.println("Invalid");
+					}
+					
+				}
+				
+			}
+			System.out.println("Do you want to continue:(1/0) ");
+			choice = sc.nextInt();
+		}
+		return root;
+	}
+	void recursive_preorder(node temp)
+	{
+		if(temp != null)
+		{
+			System.out.print(temp.data + " ");
+			recursive_preorder(temp.left);
+			recursive_preorder(temp.right);
+		}
+	}
+	
+	void recursive_postorder(node temp)
+	{
+		if(temp != null)
+		{
+			recursive_postorder(temp.left);
+			recursive_postorder(temp.right);
+			System.out.print(temp.data+" ");
+		}
+	}
+	
+	void recursive_inorder(node temp)
+	{
+		if(temp != null)
+		{
+			recursive_postorder(temp.left);
+			System.out.print(temp.data+" ");
+			recursive_postorder(temp.right);
+		}
+	}
+	void nonrecursive_preorder()
+	{
+		Stack<node> s = new Stack<node>();
+		node ptr = root;
+		while(ptr!= null || s.empty()!= true)
+		{
+			while(ptr!=null)
+			{
+				System.out.print(ptr.data + " ");  // print data in ptr
+				s.push(ptr);
+				ptr = ptr.left;   //move ptr to left
+			}
+			if(ptr==null && s.empty()!= true)
+			{
+				ptr = s.pop();
+				ptr = ptr.right;     // move ptr to right
+				
+			}
+		}
+	}
+		
+		void nonrecursive_inorder()
+		{
+			Stack<node> s = new Stack<node>();
+			node ptr = root;
+			while(ptr!= null || s.empty()!= true)
+			{
+				while(ptr!=null)
+				{
+					s.push(ptr);
+					ptr = ptr.left;   
+				}
+				if(ptr == null &&s.empty()!= true)
+				{
+					ptr = s.pop();
+					System.out.print(ptr.data + " ");  // print data in ptr
+					ptr = ptr.right;    
+					
+				}
+			}
+	    }
+		
+		void nonrecursive_postorder()
+		{
+			node ptr = root;
+			Stack<node> s1 = new Stack<node>();
+			Stack<Character> s2 =  new Stack<Character>();  //Stack for flags
+			char status =0;
+			while(ptr!=null||!s1.isEmpty()) {
+				while(ptr!=null) {
+					s1.push(ptr);
+					s2.push('l');
+					ptr = ptr.left;
+				}
+				if(ptr==null&&!s1.isEmpty()) {
+					ptr = s1.pop();
+					status = s2.pop();
+					if(status=='l') {
+						s1.push(ptr);
+						s2.push('r');
+						ptr = ptr.right;
+					}
+					else {
+						System.out.print(ptr.data+" ");
+						ptr =null;
+					}
+				}
+			}
+		}
+	
+	
+	
+}
+
+public class Dfs {
+
+	public static void main(String[] args) {
+		tree t = new tree();
+		node r = null;
+		int ch;
+		Scanner sc = new Scanner(System.in);
+		r = t.create();
+		do {
+	    System.out.println("\nMENU\n"+"1.recursive preorder\n"+"2.recursive postorder\n"+"3.recursive inorder\n"+"4.non recursive preorder\n"+"5.non recursive postorder\n"+"6.non recursive inorder\n"+"7.exit");
+	    System.out.println("enter your choice: ");
+	    ch = sc.nextInt();
+	    switch(ch)
+	    {
+	    case 1 : t.recursive_preorder(r);
+	    break;
+	    case 2 :t.recursive_postorder(r);
+	    break;
+	    case 3 :t.recursive_inorder(r);
+	    break;
+	    case 4: t.nonrecursive_preorder();
+	    	break;
+	    case 5: t.nonrecursive_postorder();
+	    	break;
+	    case 6: t.nonrecursive_inorder();
+	    	break;
+	    case 7: System.out.println("Thank you");
+	    break;
+	    default:System.out.println("invalid choice");
+	    }
+		}while(ch!=7);
+	}
+
+}
+/*output-
+ Enter data for node: 
+1
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+2
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+3
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+4
+Enter direction for node: 
+l
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+5
+Enter direction for node: 
+r
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+6
+Enter direction for node: 
+r
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+7
+Enter direction for node: 
+r
+Enter direction for node: 
+l
+Enter direction for node: 
+l
+Node inserted
+Do you want to continue:(1/0) 
+1
+Enter data for node: 
+8
+Enter direction for node: 
+r
+Enter direction for node: 
+l
+Enter direction for node: 
+r
+Node inserted
+Do you want to continue:(1/0) 
+0
+
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+1
+1 2 4 3 5 7 8 6 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+2
+4 2 7 8 5 6 3 1 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+3
+4 2 1 7 8 5 6 3 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+4
+1 2 4 3 5 7 8 6 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+5
+4 2 7 8 5 6 3 1 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+6
+4 2 1 7 5 8 3 6 
+MENU
+1.recursive preorder
+2.recursive postorder
+3.recursive inorder
+4.non recursive preorder
+5.non recursive postorder
+6.non recursive inorder
+7.exit
+enter your choice: 
+7
+Thank you
+*/
+
